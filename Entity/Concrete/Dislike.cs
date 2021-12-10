@@ -2,7 +2,7 @@
 
 namespace Entity.Concrete
 {
-    public class Like : IEntity
+    public class Dislike : IEntity
     {
         public int Id { get; set; }
         public int UserId { get; set; }

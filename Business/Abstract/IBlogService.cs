@@ -9,7 +9,9 @@ namespace Business.Abstract
         IDataResult<List<Blog>> GetAll();
         IDataResult<List<Blog>> GetAllByUserId(int userId);
         IDataResult<List<Blog>> GetAllOrderByCreationDate();
-        IDataResult<List<Blog>> GetAllOrderByLikeCount();
+        IDataResult<List<Blog>> GetAllOrderByPopulation();
+        IDataResult<int> GetLikeCountByBlogId(int blogId);
+        IDataResult<int> GetDislikeCountByBlogId(int blogId);
         IDataResult<Blog> GetById(int id);
         IDataResult<List<BlogDetailDto>> GetBlogDetails();
         IResult Add(Blog blog);

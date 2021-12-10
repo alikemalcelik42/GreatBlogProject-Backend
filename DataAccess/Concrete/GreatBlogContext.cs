@@ -14,6 +14,7 @@ namespace DataAccess.Concrete
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Like> Likes { get; set; }
+        public DbSet<Dislike> Dislikes { get; set; } 
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }

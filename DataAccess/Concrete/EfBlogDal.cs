@@ -22,7 +22,6 @@ namespace DataAccess.Concrete
                                  Title = b.Title,
                                  Content = b.Content,
                                  ImagePath = b.ImagePath,
-                                 LikeCount = b.LikeCount,
                                  CreationDate = b.CreationDate
                              };
 

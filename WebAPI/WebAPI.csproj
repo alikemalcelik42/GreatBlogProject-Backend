@@ -7,11 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Business\Business.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Core">
+      <HintPath>..\..\MyFinalProject\Core\bin\Debug\netcoreapp3.1\Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

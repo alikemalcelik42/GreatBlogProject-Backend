@@ -9,7 +9,6 @@ namespace Entity.Concrete
         public string Title { get; set; }
         public string Content { get; set; }
         public string ImagePath { get; set; }
-        public int LikeCount { get; set; }
         public DateTime CreationDate { get; set; }
     }
 }

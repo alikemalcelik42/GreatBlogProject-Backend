@@ -1,5 +1,9 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Secure;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -17,18 +21,24 @@ namespace Business.Concrete
             _commentDal = commentDal;
         }
 
+        [SecuredOperation("admin,editor,user,comment.add")]
+        [CacheRemoveAspect("ICommentService.Get")]
+        [ValidationAspect(typeof(CommentValidator))]
         public IResult Add(Comment comment)
         {
             _commentDal.Add(comment);
             return new SuccessResult(Messages.CommentAdded);
         }
 
+        [SecuredOperation("admin,editor,user,comment.delete")]
+        [CacheRemoveAspect("ICommentService.Get")]
         public IResult Delete(Comment comment)
         {
             _commentDal.Delete(comment);
-            return new SuccessResult(Messages.LileDeleted);
+            return new SuccessResult(Messages.CommentDeleted);
         }
 
+        [CacheAspect]
         public IDataResult<List<Comment>> GetAll()
         {
             return new SuccessDataResult<List<Comment>>(_commentDal.GetAll(), Messages.CommentsListed);
@@ -44,6 +54,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Comment>>(_commentDal.GetAll(c => c.BlogId == blogId), Messages.CommentsListed);
         }
 
+        [CacheAspect]
         public IDataResult<List<CommentDetailDto>> GetCommentDetails()
         {
             return new SuccessDataResult<List<CommentDetailDto>>(_commentDal.GetCommentDetails(), Messages.CommentsListed);
@@ -51,7 +62,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Comment>> GetAllOrderByCreationDate()
         {
-            return new SuccessDataResult<List<Comment>>(_commentDal.GetAll().OrderBy(c => c.CreationDate).ToList(),
+            return new SuccessDataResult<List<Comment>>(_commentDal.GetAll().OrderByDescending(c => c.CreationDate).ToList(),
                 Messages.CommentsListed);
         }
 
@@ -60,6 +71,9 @@ namespace Business.Concrete
             return new SuccessDataResult<Comment>(_commentDal.Get(c => c.Id == id), Messages.CommentsListed);
         }
 
+        [SecuredOperation("admin,editor,user,comment.update")]
+        [CacheRemoveAspect("ICommentService.Get")]
+        [ValidationAspect(typeof(CommentValidator))]
         public IResult Update(Comment comment)
         {
             _commentDal.Update(comment);

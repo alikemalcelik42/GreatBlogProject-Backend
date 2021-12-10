@@ -1,14 +1,15 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete;
 
-BlogManager blogManager = new BlogManager(new EfBlogDal());
+CommentManager commentManager = new CommentManager(new EfCommentDal());
 
-var result = blogManager.GetAll();
+var result = commentManager.GetAll();
 
 if(result.Success)
 {
-    foreach(var blog in result.Data)
+    foreach(var comment in result.Data)
     {
-        Console.WriteLine(blog.Title);
+        Console.WriteLine(comment.Content);
     }
+    Console.WriteLine(result.Message);
 }
