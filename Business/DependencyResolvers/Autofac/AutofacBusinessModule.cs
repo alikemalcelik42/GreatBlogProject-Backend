@@ -16,6 +16,7 @@ namespace Business.DependencyResolvers.Autofac
         {
             builder.RegisterType<BlogManager>().As<IBlogService>().SingleInstance();
             builder.RegisterType<EfBlogDal>().As<IBlogDal>().SingleInstance();
+            builder.RegisterType<FileManager>().As<IFileService>().SingleInstance();
 
             builder.RegisterType<CommentManager>().As<ICommentService>().SingleInstance();
             builder.RegisterType<EfCommentDal>().As<ICommentDal>().SingleInstance();

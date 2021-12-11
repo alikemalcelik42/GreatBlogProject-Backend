@@ -1,6 +1,8 @@
 ﻿using Core.Utilities.Results.Abstract;
 using Entity.Concrete;
 using Entity.DTOs;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Business.Abstract
 {
@@ -14,7 +16,7 @@ namespace Business.Abstract
         IDataResult<int> GetDislikeCountByBlogId(int blogId);
         IDataResult<Blog> GetById(int id);
         IDataResult<List<BlogDetailDto>> GetBlogDetails();
-        IResult Add(Blog blog);
+        IResult Add(Blog blog, IFormFile imageFile);
         IResult Update(Blog blog);
         IResult Delete(Blog blog);
     }

@@ -21,7 +21,8 @@ namespace DataAccess.Concrete
                                  UserEmail = u.Email,
                                  Title = b.Title,
                                  Content = b.Content,
-                                 ImagePath = b.ImagePath,
+                                 ImageFilePath = b.ImageFilePath,
+                                 ImageRootPath = b.ImageRootPath,
                                  CreationDate = b.CreationDate
                              };
 

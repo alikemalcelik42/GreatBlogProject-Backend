@@ -8,7 +8,8 @@ namespace Entity.Concrete
         public int UserId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public string ImagePath { get; set; }
+        public string ImageFilePath { get; set; }
+        public string ImageRootPath { get; set; }
         public DateTime CreationDate { get; set; }
     }
 }

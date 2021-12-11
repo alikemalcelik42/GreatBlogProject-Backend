@@ -3,12 +3,15 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Secure;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entity.Concrete;
 using Entity.DTOs;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Business.Concrete
 {
@@ -17,19 +20,25 @@ namespace Business.Concrete
         IBlogDal _blogDal;
         ILikeService _likeService;
         IDislikeService _dislikeService;
+        IFileService _fileService;
 
-        public BlogManager(IBlogDal blogDal, ILikeService likeService, IDislikeService dislikeService)
+        public BlogManager(IBlogDal blogDal, ILikeService likeService, IDislikeService dislikeService, IFileService fileService)
         {
             _blogDal = blogDal;
             _likeService = likeService;
             _dislikeService = dislikeService;
+            _fileService = fileService;
         }
 
-        [SecuredOperation("admin,blog.add")]
+        // [SecuredOperation("admin,blog.add")]
         [CacheRemoveAspect("IBlogService.Get")]
-        [ValidationAspect(typeof(BlogValidator))]
-        public IResult Add(Blog blog)
+        // [ValidationAspect(typeof(BlogValidator))]
+        [TransactionScopeAspect]
+        public IResult Add(Blog blog, IFormFile imageFile)
         {
+            var result = _fileService.Add(imageFile);
+            blog.ImageFilePath = result.Data.FilePath;
+            blog.ImageRootPath = result.Data.RootPath;
             _blogDal.Add(blog);
             return new SuccessResult(Messages.BlogAdded);
         }

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Concrete;
 using Entity.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -105,9 +106,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Blog blog)
+        public async Task<IActionResult> Add([FromForm] Blog blog, [FromForm] IFormFile imageFile)
         {
-            var result = _blogService.Add(blog);
+            var result = _blogService.Add(blog, imageFile);
 
             if (result.Success)
                 return Ok(result);
