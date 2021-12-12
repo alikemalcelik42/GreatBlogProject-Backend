@@ -24,7 +24,7 @@ namespace Business.Concrete
             _commentDal = commentDal;
         }
 
-        //[SecuredOperation("admin,editor,user,comment.add")]
+        [SecuredOperation("admin,editor,user,comment.add")]
         [CacheRemoveAspect("ICommentService.Get")]
         [ValidationAspect(typeof(CommentValidator))]
         [LogAspect(typeof(FileLogger))]
