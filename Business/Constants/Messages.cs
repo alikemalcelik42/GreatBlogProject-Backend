@@ -41,7 +41,7 @@ namespace Business.Constants
         public static string SameUserCannotDislikeSameBlogMoreThanOnce = "Aynı blogu aynı kullanıcı birden fazla beğenememez";
 
         public static string FileCreated = "Dosya oluşturuldu";
-        public static string FileRemoved = "Dosya kaldırılıdı";
+        public static string FileDeleted = "Dosya kaldırılıdı";
         public static string FileUpdated = "Dosya güncellenedi";
     }
 }

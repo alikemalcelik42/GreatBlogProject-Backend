@@ -43,11 +43,13 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BlogAdded);
         }
 
-        [SecuredOperation("admin,blog.delete")]
+        // [SecuredOperation("admin,blog.delete")]
         [CacheRemoveAspect("IBlogService.Get")]
+        [TransactionScopeAspect]
         public IResult Delete(Blog blog)
         {
             _blogDal.Delete(blog);
+            _fileService.Delete(blog.ImageFilePath);
             return new SuccessResult(Messages.BlogDeleted);
         }
 
@@ -96,12 +98,22 @@ namespace Business.Concrete
             return new SuccessDataResult<Blog>(_blogDal.Get(b => b.Id == id), Messages.BlogsListed);
         }
 
-        [SecuredOperation("admin,blog.add")]
+        // [SecuredOperation("admin,blog.add")]
         [CacheRemoveAspect("IBlogService.Get")]
-        [ValidationAspect(typeof(BlogValidator))]
-        public IResult Update(Blog blog)
+        // [ValidationAspect(typeof(BlogValidator))]
+        [TransactionScopeAspect]
+        public IResult Update(Blog blog, IFormFile file)
         {
+            if (file != null)
+            {
+                string oldFilePath = GetById(blog.Id).Data.ImageFilePath;
+                var result = _fileService.Update(oldFilePath, file);
+                blog.ImageFilePath = result.Data.FilePath;
+                blog.ImageRootPath = result.Data.RootPath;
+            }
+
             _blogDal.Update(blog);
+
             return new SuccessResult(Messages.BlogUpdated);
         }
     }

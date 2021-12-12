@@ -17,7 +17,7 @@ namespace Business.Abstract
         IDataResult<Blog> GetById(int id);
         IDataResult<List<BlogDetailDto>> GetBlogDetails();
         IResult Add(Blog blog, IFormFile imageFile);
-        IResult Update(Blog blog);
+        IResult Update(Blog blog, IFormFile imageFile);
         IResult Delete(Blog blog);
     }
 }

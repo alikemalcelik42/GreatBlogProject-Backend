@@ -9,6 +9,6 @@ namespace Business.Abstract
     {
         IDataResult<FileDetailDto> Add(IFormFile file);
         IDataResult<FileDetailDto> Update(string oldFilePath, IFormFile file);
-        IResult Remove(string filePath);
+        IResult Delete(string filePath);
     }
 }

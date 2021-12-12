@@ -45,14 +45,16 @@ namespace Business.Concrete
             }
         }
 
-        public IResult Remove(string path)
+        public IResult Delete(string path)
         {
-            throw new NotImplementedException();
+            File.Delete(path);
+            return new SuccessResult(Messages.FileDeleted);
         }
 
         public IDataResult<FileDetailDto> Update(string oldFilePath, IFormFile file)
         {
-            throw new NotImplementedException();
+            Delete(oldFilePath);
+            return Add(file);
         }
     }
 }
