@@ -65,6 +65,11 @@ namespace Business.Concrete
         [CacheRemoveAspect("ILikeService.Get")]
         public IResult Update(Like like)
         {
+            var result = BusinessRules.Run(SameUserCannotLikeSameBlogMoreThanOnce(like));
+
+            if (result != null)
+                return result;
+
             _likeDal.Update(like);
             return new SuccessResult(Messages.LikeUpdated);
         }

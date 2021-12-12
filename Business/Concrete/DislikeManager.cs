@@ -66,6 +66,11 @@ namespace Business.Concrete
         [CacheRemoveAspect("IDislikeService.Get")]
         public IResult Update(Dislike dislike)
         {
+            var result = BusinessRules.Run(SameUserCannotDislikeSameBlogMoreThanOnce(dislike));
+
+            if (result != null)
+                return result;
+
             _dislikeDal.Update(dislike);
             return new SuccessResult(Messages.DislikeUpdated);
         }

@@ -7,8 +7,8 @@ namespace Business.ValidationRules.FluentValidation
     {
         public BlogValidator()
         {
-            RuleFor(b => b.Title).MinimumLength(1).MaximumLength(100);
-            RuleFor(b => b.Content).MinimumLength(1).MaximumLength(4000);
+            RuleFor(b => b.Title).MinimumLength(10).MaximumLength(100);
+            RuleFor(b => b.Content).MinimumLength(500).MaximumLength(4000);
         }
     }
 }
