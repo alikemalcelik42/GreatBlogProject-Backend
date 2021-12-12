@@ -3,6 +3,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Secure;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Concrete;
@@ -46,7 +47,6 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<Comment>> GetAll()
         {
-            throw new Exception("Bakım saatinde");
             return new SuccessDataResult<List<Comment>>(_commentDal.GetAll(), Messages.CommentsListed);
         }
 
@@ -60,6 +60,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Comment>>(_commentDal.GetAll(c => c.BlogId == blogId), Messages.CommentsListed);
         }
 
+        [PerformanceAspect(3)]
         [CacheAspect]
         public IDataResult<List<CommentDetailDto>> GetCommentDetails()
         {

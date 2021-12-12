@@ -3,6 +3,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Secure;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
@@ -90,6 +91,7 @@ namespace Business.Concrete
             return new SuccessDataResult<int>(_dislikeService.GetAllByBlogId(blogId).Data.Count, Messages.DislikeCountListed);
         }
 
+        [PerformanceAspect(3)]
         [CacheAspect]
         public IDataResult<List<BlogDetailDto>> GetBlogDetails()
         {

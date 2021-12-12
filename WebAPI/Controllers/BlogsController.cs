@@ -3,6 +3,7 @@ using Business.Concrete;
 using Entity.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace WebAPI.Controllers
 {

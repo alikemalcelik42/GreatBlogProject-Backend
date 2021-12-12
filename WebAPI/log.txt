@@ -1,8 +1,0 @@
-Business.Abstract.ICommentService.GetAll() : 12.12.2021 21:07:29
--> Core.Utilities.Results.Concrete.SuccessDataResult`1[System.Collections.Generic.List`1[Entity.Concrete.Comment]]
-Business.Abstract.ICommentService.Add(Entity.Concrete.Comment) : 12.12.2021 21:08:32
--> Core.Utilities.Results.Concrete.SuccessResult
-Business.Abstract.ICommentService.GetAll() : 12.12.2021 21:08:47
--> Core.Utilities.Results.Concrete.SuccessDataResult`1[System.Collections.Generic.List`1[Entity.Concrete.Comment]]
-Business.Abstract.ICommentService.GetAll() : 12.12.2021 21:10:38
--> Bakım saatinde
