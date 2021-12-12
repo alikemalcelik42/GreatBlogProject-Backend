@@ -2,8 +2,10 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Secure;
 using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Logging.Concrete;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -21,9 +23,10 @@ namespace Business.Concrete
             _commentDal = commentDal;
         }
 
-        [SecuredOperation("admin,editor,user,comment.add")]
+        //[SecuredOperation("admin,editor,user,comment.add")]
         [CacheRemoveAspect("ICommentService.Get")]
         [ValidationAspect(typeof(CommentValidator))]
+        [LogAspect(typeof(FileLogger))]
         public IResult Add(Comment comment)
         {
             _commentDal.Add(comment);
@@ -32,15 +35,18 @@ namespace Business.Concrete
 
         [SecuredOperation("admin,editor,user,comment.delete")]
         [CacheRemoveAspect("ICommentService.Get")]
+        [LogAspect(typeof(FileLogger))]
         public IResult Delete(Comment comment)
         {
             _commentDal.Delete(comment);
             return new SuccessResult(Messages.CommentDeleted);
         }
 
+        [LogAspect(typeof(FileLogger))]
         [CacheAspect]
         public IDataResult<List<Comment>> GetAll()
         {
+            throw new Exception("Bakım saatinde");
             return new SuccessDataResult<List<Comment>>(_commentDal.GetAll(), Messages.CommentsListed);
         }
 
@@ -74,6 +80,7 @@ namespace Business.Concrete
         [SecuredOperation("admin,editor,user,comment.update")]
         [CacheRemoveAspect("ICommentService.Get")]
         [ValidationAspect(typeof(CommentValidator))]
+        [LogAspect(typeof(FileLogger))]
         public IResult Update(Comment comment)
         {
             _commentDal.Update(comment);

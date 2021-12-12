@@ -8,7 +8,7 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CommentValidator()
         {
-            RuleFor(c => c.Content).MinimumLength(1).MaximumLength(500);
+            RuleFor(c => c.Content).MinimumLength(10).MaximumLength(500);
         }
     }
 }

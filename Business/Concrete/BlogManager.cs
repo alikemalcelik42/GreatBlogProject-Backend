@@ -2,16 +2,17 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Secure;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Logging.Concrete;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entity.Concrete;
 using Entity.DTOs;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Business.Concrete
 {
@@ -34,6 +35,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IBlogService.Get")]
         [ValidationAspect(typeof(BlogValidator))]
         [TransactionScopeAspect]
+        [LogAspect(typeof(FileLogger))]
         public IResult Add(Blog blog, IFormFile imageFile)
         {
             var result = _fileService.Add(imageFile);
@@ -46,6 +48,7 @@ namespace Business.Concrete
         [SecuredOperation("admin,editor,blog.delete")]
         [CacheRemoveAspect("IBlogService.Get")]
         [TransactionScopeAspect]
+        [LogAspect(typeof(FileLogger))]
         public IResult Delete(Blog blog)
         {
             _blogDal.Delete(blog);
@@ -102,6 +105,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IBlogService.Get")]
         [ValidationAspect(typeof(BlogValidator))]
         [TransactionScopeAspect]
+        [LogAspect(typeof(FileLogger))]
         public IResult Update(Blog blog, IFormFile file)
         {
             if (file != null)
