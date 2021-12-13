@@ -1,8 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Secure;
-using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -14,17 +12,20 @@ namespace Business.Concrete
     public class DislikeManager : IDislikeService
     {
         IDislikeDal _dislikeDal;
+        Lazy<ILikeService> _likeService;
 
-        public DislikeManager(IDislikeDal dislikeDal)
+        public DislikeManager(IDislikeDal dislikeDal, Lazy<ILikeService> likeService)
         {
             _dislikeDal = dislikeDal;
+            _likeService = likeService;
         }
 
-        [SecuredOperation("admin,editor,user,dislike.add")]
+        // [SecuredOperation("admin,editor,user,dislike.add")]
         [CacheRemoveAspect("IDislikeService.Get")]
         public IResult Add(Dislike dislike)
         {
-            var result = BusinessRules.Run(SameUserCannotDislikeSameBlogMoreThanOnce(dislike));
+            var result = BusinessRules.Run(SameUserCannotDislikeSameBlogMoreThanOnce(dislike),
+                SameUserCannotBothLikeAndDislike(dislike));
 
             if (result != null)
                 return result;
@@ -33,12 +34,12 @@ namespace Business.Concrete
             return new SuccessResult(Messages.DislikeAdded);
         }
 
-        [SecuredOperation("admin,editor,user,dislike.delete")]
+        // [SecuredOperation("admin,editor,user,dislike.delete")]
         [CacheRemoveAspect("IDislikeService.Get")]
         public IResult Delete(Dislike dislike)
         {
             _dislikeDal.Delete(dislike);
-            return new SuccessResult(Messages.DislikesListed);
+            return new SuccessResult(Messages.DislikeDeleted);
         }
 
         [CacheAspect]
@@ -62,11 +63,12 @@ namespace Business.Concrete
             return new SuccessDataResult<Dislike>(_dislikeDal.Get(d => d.Id == id), Messages.DislikesListed);
         }
 
-        [SecuredOperation("admin,editor,user,dislike.update")]
+        // [SecuredOperation("admin,editor,user,dislike.update")]
         [CacheRemoveAspect("IDislikeService.Get")]
         public IResult Update(Dislike dislike)
         {
-            var result = BusinessRules.Run(SameUserCannotDislikeSameBlogMoreThanOnce(dislike));
+            var result = BusinessRules.Run(SameUserCannotDislikeSameBlogMoreThanOnce(dislike),
+                SameUserCannotBothLikeAndDislike(dislike));
 
             if (result != null)
                 return result;
@@ -83,6 +85,19 @@ namespace Business.Concrete
             {
                 if (i.UserId == dislike.UserId)
                     return new ErrorResult(Messages.SameUserCannotDislikeSameBlogMoreThanOnce);
+            }
+
+            return new SuccessResult();
+        }
+
+        private IResult SameUserCannotBothLikeAndDislike(Dislike dislike)
+        {
+            var result = _likeService.Value.GetAllByBlogId(dislike.BlogId);
+
+            foreach (var i in result.Data)
+            {
+                if (i.UserId == dislike.UserId)
+                    return new ErrorResult(Messages.SameUserCannotBothLikeAndDislike);
             }
 
             return new SuccessResult();

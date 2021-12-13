@@ -32,7 +32,7 @@ namespace Business.Concrete
             _fileService = fileService;
         }
 
-        [SecuredOperation("admin,editor,blog.add")]
+        // [SecuredOperation("admin,editor,blog.add")]
         [CacheRemoveAspect("IBlogService.Get")]
         [ValidationAspect(typeof(BlogValidator))]
         [TransactionScopeAspect]
@@ -46,7 +46,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BlogAdded);
         }
 
-        [SecuredOperation("admin,editor,blog.delete")]
+        // [SecuredOperation("admin,editor,blog.delete")]
         [CacheRemoveAspect("IBlogService.Get")]
         [TransactionScopeAspect]
         [LogAspect(typeof(FileLogger))]
@@ -103,20 +103,28 @@ namespace Business.Concrete
             return new SuccessDataResult<Blog>(_blogDal.Get(b => b.Id == id), Messages.BlogsListed);
         }
 
-        [SecuredOperation("admin,editor,blog.add")]
+        // [SecuredOperation("admin,editor,blog.update")]
         [CacheRemoveAspect("IBlogService.Get")]
         [ValidationAspect(typeof(BlogValidator))]
         [TransactionScopeAspect]
         [LogAspect(typeof(FileLogger))]
-        public IResult Update(Blog blog, IFormFile file)
+        public IResult Update(Blog blog)
         {
-            if (file != null)
-            {
-                string oldFilePath = GetById(blog.Id).Data.ImageFilePath;
-                var result = _fileService.Update(oldFilePath, file);
-                blog.ImageFilePath = result.Data.FilePath;
-                blog.ImageRootPath = result.Data.RootPath;
-            }
+            _blogDal.Update(blog);
+            return new SuccessResult(Messages.BlogUpdated);
+        }
+
+        // [SecuredOperation("admin,editor,blog.update")]
+        [CacheRemoveAspect("IBlogService.Get")]
+        [ValidationAspect(typeof(BlogValidator))]
+        [TransactionScopeAspect]
+        [LogAspect(typeof(FileLogger))]
+        public IResult UpdateWithFile(Blog blog, IFormFile file)
+        {
+            string oldFilePath = GetById(blog.Id).Data.ImageFilePath;
+            var result = _fileService.Update(oldFilePath, file);
+            blog.ImageFilePath = result.Data.FilePath;
+            blog.ImageRootPath = result.Data.RootPath;
 
             _blogDal.Update(blog);
 

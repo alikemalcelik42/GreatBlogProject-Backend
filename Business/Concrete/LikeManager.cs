@@ -13,17 +13,20 @@ namespace Business.Concrete
     public class LikeManager : ILikeService
     {
         ILikeDal _likeDal;
+        Lazy<IDislikeService> _dislikeService;
 
-        public LikeManager(ILikeDal likeDal)
+        public LikeManager(ILikeDal likeDal, Lazy<IDislikeService> dislikeService)
         {
             _likeDal = likeDal;
+            _dislikeService = dislikeService;
         }
 
-        [SecuredOperation("admin,editor,user,like.add")]
+        // [SecuredOperation("admin,editor,user,like.add")]
         [CacheRemoveAspect("ILikeService.Get")]
         public IResult Add(Like like)
         {
-            var result = BusinessRules.Run(SameUserCannotLikeSameBlogMoreThanOnce(like));
+            var result = BusinessRules.Run(SameUserCannotLikeSameBlogMoreThanOnce(like),
+                SameUserCannotBothLikeAndDislike(like));
 
             if (result != null)
                 return result;
@@ -32,7 +35,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.LikeAdded);
         }
 
-        [SecuredOperation("admin,editor,user,like.delete")]
+        // [SecuredOperation("admin,editor,user,like.delete")]
         [CacheRemoveAspect("ILikeService.Get")]
         public IResult Delete(Like like)
         {
@@ -61,11 +64,12 @@ namespace Business.Concrete
             return new SuccessDataResult<Like>(_likeDal.Get(l => l.Id == id), Messages.LikesListed);
         }
 
-        [SecuredOperation("admin,editor,user,like.update")]
+        // [SecuredOperation("admin,editor,user,like.update")]
         [CacheRemoveAspect("ILikeService.Get")]
         public IResult Update(Like like)
         {
-            var result = BusinessRules.Run(SameUserCannotLikeSameBlogMoreThanOnce(like));
+            var result = BusinessRules.Run(SameUserCannotLikeSameBlogMoreThanOnce(like),
+                SameUserCannotBothLikeAndDislike(like));
 
             if (result != null)
                 return result;
@@ -82,6 +86,19 @@ namespace Business.Concrete
             {
                 if(i.UserId == like.UserId)
                     return new ErrorResult(Messages.SameUserCannotLikeSameBlogMoreThanOnce);
+            }
+
+            return new SuccessResult();
+        }
+
+        private IResult SameUserCannotBothLikeAndDislike(Like like)
+        {
+            var result = _dislikeService.Value.GetAllByBlogId(like.BlogId);
+
+            foreach (var i in result.Data)
+            {
+                if (i.UserId == like.UserId)
+                    return new ErrorResult(Messages.SameUserCannotBothLikeAndDislike);
             }
 
             return new SuccessResult();

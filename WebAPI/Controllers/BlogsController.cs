@@ -118,9 +118,20 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public async Task<IActionResult> Update([FromForm] Blog blog, [FromForm] IFormFile imageFile)
+        public IActionResult Update(Blog blog)
         {
-            var result = _blogService.Update(blog, imageFile);
+            var result = _blogService.Update(blog);
+
+            if (result.Success)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        [HttpPost("updatewithfile")]
+        public async Task<IActionResult> UpdateWithFile([FromForm] Blog blog, [FromForm] IFormFile imageFile)
+        {
+            var result = _blogService.UpdateWithFile(blog, imageFile);
 
             if (result.Success)
                 return Ok(result);

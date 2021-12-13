@@ -24,7 +24,7 @@ namespace Business.Concrete
             _commentDal = commentDal;
         }
 
-        [SecuredOperation("admin,editor,user,comment.add")]
+        //[SecuredOperation("admin,editor,user,comment.add")]
         [CacheRemoveAspect("ICommentService.Get")]
         [ValidationAspect(typeof(CommentValidator))]
         [LogAspect(typeof(FileLogger))]
@@ -34,7 +34,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CommentAdded);
         }
 
-        [SecuredOperation("admin,editor,user,comment.delete")]
+        //[SecuredOperation("admin,editor,user,comment.delete")]
         [CacheRemoveAspect("ICommentService.Get")]
         [LogAspect(typeof(FileLogger))]
         public IResult Delete(Comment comment)
@@ -78,7 +78,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Comment>(_commentDal.Get(c => c.Id == id), Messages.CommentsListed);
         }
 
-        [SecuredOperation("admin,editor,user,comment.update")]
+        //[SecuredOperation("admin,editor,user,comment.update")]
         [CacheRemoveAspect("ICommentService.Get")]
         [ValidationAspect(typeof(CommentValidator))]
         [LogAspect(typeof(FileLogger))]

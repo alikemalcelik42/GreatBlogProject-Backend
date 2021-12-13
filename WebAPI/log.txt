@@ -1,0 +1,8 @@
+Business.Abstract.IBlogService.Add(Entity.Concrete.Blog,Microsoft.AspNetCore.Http.FormFile) -> Result: Core.Utilities.Results.Concrete.SuccessResult : 13.12.2021 16:55:36
+Business.Abstract.IBlogService.Add(Entity.Concrete.Blog,Microsoft.AspNetCore.Http.FormFile) -> Result: Core.Utilities.Results.Concrete.SuccessResult : 13.12.2021 16:57:27
+Business.Abstract.IBlogService.Update(Entity.Concrete.Blog,Microsoft.AspNetCore.Http.FormFile) -> Result: Core.Utilities.Results.Concrete.SuccessResult : 13.12.2021 16:59:50
+Business.Abstract.IBlogService.Delete(Entity.Concrete.Blog) -> Result: Core.Utilities.Results.Concrete.SuccessResult : 13.12.2021 17:02:24
+Business.Abstract.IBlogService.UpdateWithFile(Entity.Concrete.Blog,Microsoft.AspNetCore.Http.FormFile) -> Result: Core.Utilities.Results.Concrete.SuccessResult : 13.12.2021 17:13:10
+Business.Abstract.IBlogService.Update(Entity.Concrete.Blog) -> Result: Core.Utilities.Results.Concrete.SuccessResult : 13.12.2021 17:14:10
+Business.Abstract.ICommentService.Add(Entity.Concrete.Comment) -> Result: Core.Utilities.Results.Concrete.SuccessResult : 13.12.2021 17:32:35
+Business.Abstract.ICommentService.GetAll() -> Result: Core.Utilities.Results.Concrete.SuccessDataResult`1[System.Collections.Generic.List`1[Entity.Concrete.Comment]] : 13.12.2021 17:32:50

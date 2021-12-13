@@ -39,7 +39,7 @@ namespace Business.Constants
         public static string DislikesListed = "Beğenmemeler listelendi";
         public static string DislikeUpdated = "Beğenmeme güncellendi";
         public static string SameUserCannotDislikeSameBlogMoreThanOnce = "Aynı blogu aynı kullanıcı birden fazla beğenememez";
-        public static string SameUserCannotBothLikeAndDislike = "Aynı kişi aynı bloga hem beğenip hem beğenememez";
+        public static string SameUserCannotBothLikeAndDislike = "Aynı kişi aynı blogu hem beğenip hem beğenememez";
 
         public static string FileCreated = "Dosya oluşturuldu";
         public static string FileDeleted = "Dosya kaldırılıdı";
