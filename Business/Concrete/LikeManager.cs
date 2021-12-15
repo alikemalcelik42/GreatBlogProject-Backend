@@ -21,7 +21,7 @@ namespace Business.Concrete
             _dislikeService = dislikeService;
         }
 
-        // [SecuredOperation("admin,editor,user,like.add")]
+        [SecuredOperation("admin,editor,user,like.add")]
         [CacheRemoveAspect("ILikeService.Get")]
         public IResult Add(Like like)
         {
@@ -35,7 +35,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.LikeAdded);
         }
 
-        // [SecuredOperation("admin,editor,user,like.delete")]
+        [SecuredOperation("admin,editor,user,like.delete")]
         [CacheRemoveAspect("ILikeService.Get")]
         public IResult Delete(Like like)
         {
@@ -64,7 +64,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Like>(_likeDal.Get(l => l.Id == id), Messages.LikesListed);
         }
 
-        // [SecuredOperation("admin,editor,user,like.update")]
+        [SecuredOperation("admin,editor,user,like.update")]
         [CacheRemoveAspect("ILikeService.Get")]
         public IResult Update(Like like)
         {

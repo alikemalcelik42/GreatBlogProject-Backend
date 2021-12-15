@@ -32,7 +32,7 @@ namespace Business.Concrete
             _fileService = fileService;
         }
 
-        // [SecuredOperation("admin,editor,blog.add")]
+        [SecuredOperation("admin,editor,blog.add")]
         [CacheRemoveAspect("IBlogService.Get")]
         [ValidationAspect(typeof(BlogValidator))]
         [TransactionScopeAspect]
@@ -46,7 +46,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BlogAdded);
         }
 
-        // [SecuredOperation("admin,editor,blog.delete")]
+        [SecuredOperation("admin,editor,blog.delete")]
         [CacheRemoveAspect("IBlogService.Get")]
         [TransactionScopeAspect]
         [LogAspect(typeof(FileLogger))]
@@ -103,7 +103,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Blog>(_blogDal.Get(b => b.Id == id), Messages.BlogsListed);
         }
 
-        // [SecuredOperation("admin,editor,blog.update")]
+        [SecuredOperation("admin,editor,blog.update")]
         [CacheRemoveAspect("IBlogService.Get")]
         [ValidationAspect(typeof(BlogValidator))]
         [TransactionScopeAspect]
@@ -114,7 +114,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BlogUpdated);
         }
 
-        // [SecuredOperation("admin,editor,blog.update")]
+        [SecuredOperation("admin,editor,blog.update")]
         [CacheRemoveAspect("IBlogService.Get")]
         [ValidationAspect(typeof(BlogValidator))]
         [TransactionScopeAspect]

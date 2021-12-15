@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Secure;
 using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -20,7 +21,7 @@ namespace Business.Concrete
             _likeService = likeService;
         }
 
-        // [SecuredOperation("admin,editor,user,dislike.add")]
+        [SecuredOperation("admin,editor,user,dislike.add")]
         [CacheRemoveAspect("IDislikeService.Get")]
         public IResult Add(Dislike dislike)
         {
@@ -34,7 +35,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.DislikeAdded);
         }
 
-        // [SecuredOperation("admin,editor,user,dislike.delete")]
+        [SecuredOperation("admin,editor,user,dislike.delete")]
         [CacheRemoveAspect("IDislikeService.Get")]
         public IResult Delete(Dislike dislike)
         {
@@ -63,7 +64,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Dislike>(_dislikeDal.Get(d => d.Id == id), Messages.DislikesListed);
         }
 
-        // [SecuredOperation("admin,editor,user,dislike.update")]
+        [SecuredOperation("admin,editor,user,dislike.update")]
         [CacheRemoveAspect("IDislikeService.Get")]
         public IResult Update(Dislike dislike)
         {
