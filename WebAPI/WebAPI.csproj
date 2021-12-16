@@ -29,4 +29,6 @@
     <Folder Include="wwwroot\BlogImages\" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
 </Project>

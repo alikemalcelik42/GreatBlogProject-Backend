@@ -46,7 +46,6 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CommentDeleted);
         }
 
-        [LogAspect(typeof(FileLogger))]
         [CacheAspect]
         public IDataResult<List<Comment>> GetAll()
         {
