@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="log.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
@@ -24,6 +28,10 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\BlogImages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="log.json" />
   </ItemGroup>
 
 </Project>

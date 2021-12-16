@@ -1,13 +1,14 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Exception;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
-using Core.Aspects.Autofac.Secure;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Logging.Concrete;
+using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -37,6 +38,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(BlogValidator))]
         [TransactionScopeAspect]
         [LogAspect(typeof(FileLogger))]
+        [ExceptionLogAspect(typeof(FileLogger))]
         public IResult Add(Blog blog, IFormFile imageFile)
         {
             var result = _fileService.Add(imageFile);
@@ -50,6 +52,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IBlogService.Get")]
         [TransactionScopeAspect]
         [LogAspect(typeof(FileLogger))]
+        [ExceptionLogAspect(typeof(FileLogger))]
         public IResult Delete(Blog blog)
         {
             _blogDal.Delete(blog);
@@ -57,6 +60,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BlogDeleted);
         }
 
+        [LogAspect(typeof(FileLogger))]
         [CacheAspect]
         public IDataResult<List<Blog>> GetAll()
         {
@@ -108,6 +112,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(BlogValidator))]
         [TransactionScopeAspect]
         [LogAspect(typeof(FileLogger))]
+        [ExceptionLogAspect(typeof(FileLogger))]
         public IResult Update(Blog blog)
         {
             _blogDal.Update(blog);
@@ -119,6 +124,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(BlogValidator))]
         [TransactionScopeAspect]
         [LogAspect(typeof(FileLogger))]
+        [ExceptionLogAspect(typeof(FileLogger))]
         public IResult UpdateWithFile(Blog blog, IFormFile file)
         {
             string oldFilePath = GetById(blog.Id).Data.ImageFilePath;

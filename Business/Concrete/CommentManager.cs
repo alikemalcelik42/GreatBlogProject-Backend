@@ -1,12 +1,13 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Exception;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
-using Core.Aspects.Autofac.Secure;
 using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Logging.Concrete;
+using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -28,6 +29,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("ICommentService.Get")]
         [ValidationAspect(typeof(CommentValidator))]
         [LogAspect(typeof(FileLogger))]
+        [ExceptionLogAspect(typeof(FileLogger))]
         public IResult Add(Comment comment)
         {
             _commentDal.Add(comment);
@@ -37,6 +39,7 @@ namespace Business.Concrete
         [SecuredOperation("admin,editor,user,comment.delete")]
         [CacheRemoveAspect("ICommentService.Get")]
         [LogAspect(typeof(FileLogger))]
+        [ExceptionLogAspect(typeof(FileLogger))]
         public IResult Delete(Comment comment)
         {
             _commentDal.Delete(comment);
@@ -82,6 +85,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("ICommentService.Get")]
         [ValidationAspect(typeof(CommentValidator))]
         [LogAspect(typeof(FileLogger))]
+        [ExceptionLogAspect(typeof(FileLogger))]
         public IResult Update(Comment comment)
         {
             _commentDal.Update(comment);

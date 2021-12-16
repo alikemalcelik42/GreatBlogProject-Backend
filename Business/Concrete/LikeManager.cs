@@ -1,7 +1,7 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Secure;
 using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -82,9 +82,9 @@ namespace Business.Concrete
         {
             var result = GetAllByBlogId(like.BlogId);
 
-            foreach(var i in result.Data)
+            foreach (var i in result.Data)
             {
-                if(i.UserId == like.UserId)
+                if (i.UserId == like.UserId)
                     return new ErrorResult(Messages.SameUserCannotLikeSameBlogMoreThanOnce);
             }
 
