@@ -61,7 +61,8 @@ namespace Business.Concrete
         }
 
         [LogAspect(typeof(FileLogger))]
-        //[CacheAspect]
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheAspect]
         public IDataResult<List<Blog>> GetAll()
         {
             return new SuccessDataResult<List<Blog>>(_blogDal.GetAll(), Messages.BlogsListed);
