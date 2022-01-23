@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class FileManager : IFileService
+    public class BlogFileManager : IFileService
     {
         public readonly string root = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
         public readonly string url = "https://localhost:7263";
         public readonly string currentFolder = "BlogImages";
 
-        public FileManager()
+        public BlogFileManager()
         {
             this.root = Path.Combine(root, currentFolder);
         }

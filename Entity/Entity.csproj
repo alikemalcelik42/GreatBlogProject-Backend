@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Core">
       <HintPath>..\..\MyFinalProject\Core\bin\Debug\net6.0\Core.dll</HintPath>
     </Reference>
