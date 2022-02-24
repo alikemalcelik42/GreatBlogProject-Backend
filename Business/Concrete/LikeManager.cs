@@ -13,12 +13,12 @@ namespace Business.Concrete
     public class LikeManager : ILikeService
     {
         ILikeDal _likeDal;
-        Lazy<IDislikeService> _dislikeService;
+        IDislikeService _dislikeService;
 
         public LikeManager(ILikeDal likeDal, Lazy<IDislikeService> dislikeService)
         {
             _likeDal = likeDal;
-            _dislikeService = dislikeService;
+            _dislikeService = dislikeService.Value;
         }
 
         [SecuredOperation("admin,editor,user,like.add")]
@@ -93,7 +93,7 @@ namespace Business.Concrete
 
         private IResult SameUserCannotBothLikeAndDislike(Like like)
         {
-            var result = _dislikeService.Value.GetAllByBlogId(like.BlogId);
+            var result = _dislikeService.GetAllByBlogId(like.BlogId);
 
             foreach (var i in result.Data)
             {
